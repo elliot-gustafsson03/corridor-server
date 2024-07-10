@@ -30,6 +30,7 @@ func openServer() {
 
 	http.Handle("/", fs)
 	http.HandleFunc("/api/get_next_image", getNextImage)
+	http.HandleFunc("/api/upload_image", uploadImage)
 
 	port := "3333"
 
@@ -54,4 +55,8 @@ func getNextImage(w http.ResponseWriter, r *http.Request) {
 	index++
 
 	io.WriteString(w, string(json))
+}
+
+func uploadImage(w http.ResponseWriter, r *http.Request) {
+	log.Println("tar emot bild")
 }
