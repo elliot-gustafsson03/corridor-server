@@ -5,24 +5,18 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
+	"strconv"
+	"time"
+
+	"github.com/elliot-gustafsson03/corridor-server/models"
 )
 
-var images ([2]Image)
-var index = 0
+var images = models.List{}
 
 func main() {
-	images = loadImages()
 	openServer()
-}
-
-type Image struct {
-	Name  string `json:"image"`
-	Label string `json:"label"`
-}
-
-func loadImages() [2]Image {
-	array := [2]Image{{Name: "1.png", Label: "Bandpass-filter"}, {Name: "2.png", Label: "OP-amp"}}
-	return array
 }
 
 func openServer() {
@@ -42,21 +36,52 @@ func openServer() {
 	}
 }
 
-// endpoints
-
 func getNextImage(w http.ResponseWriter, r *http.Request) {
+	image := models.Image{Name: "#", Label: "No images uploaded yet"}
 
-	json, err := json.Marshal(images[index%2])
+	if !images.IsEmpty() {
+		image = *images.NextValue()
+	}
+
+	json, err := json.Marshal(image)
 	if err != nil {
 		log.Fatal(err)
 		w.WriteHeader(500)
 	}
 
-	index++
-
 	io.WriteString(w, string(json))
 }
 
 func uploadImage(w http.ResponseWriter, r *http.Request) {
-	log.Println("tar emot bild")
+
+	err := r.ParseForm()
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	file, header, err := r.FormFile("image")
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	defer file.Close()
+
+	label := r.Form.Get("label")
+	fileName := strconv.FormatInt(time.Now().Unix(), 10) + filepath.Ext(header.Filename)
+
+	dst, err := os.Create("./public/images/" + fileName)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	defer dst.Close()
+
+	_, err = io.Copy(dst, file)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	images.Insert(models.Image{Name: fileName, Label: label})
 }
