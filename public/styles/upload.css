@@ -1,42 +1,42 @@
 .center-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  width: 95%;
-  max-width: 500px;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 95%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }
 
 h1,
 label {
-  margin: 0;
-  color: white;
+    margin: 0;
+    color: white;
 }
 
 label {
-  display: block;
-  padding-bottom: 8px;
+    display: block;
+    padding-bottom: 8px;
 }
 
 input {
-  font-size: 20px;
-  width: 100%;
-  padding: 8px;
-  border-radius: 4px;
-  border: 2px rgb(120, 120, 120) solid;
-  background: rgb(200, 200, 200);
-  box-sizing: border-box;
+    font-size: 20px;
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 2px rgb(120, 120, 120) solid;
+    background: rgb(200, 200, 200);
+    box-sizing: border-box;
 }
 
 input:focus {
-  outline: none;
+    outline: none;
 }
 
 button {
-  font-size: 16px;
-  padding: 10px;
+    font-size: 16px;
+    padding: 10px;
 }
