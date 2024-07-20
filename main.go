@@ -11,12 +11,47 @@ import (
 	"time"
 
 	"github.com/elliot-gustafsson03/corridor-server/models"
+	"github.com/joho/godotenv"
+	"github.com/supabase-community/supabase-go"
 )
 
 var images = models.List{}
+var client *supabase.Client
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	DB_URL := os.Getenv("DB_URL")
+	DB_KEY := os.Getenv("DB_KEY")
+
+	client = createClient(DB_URL, DB_KEY)
+	loadImages()
 	openServer()
+}
+
+func createClient(url string, key string) *supabase.Client {
+	client, err := supabase.NewClient(url, key, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return client
+}
+
+func loadImages() {
+	res, _, err := client.From("images").Select("*", "exact", false).Execute()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var data []models.Image
+	json.Unmarshal(res, &data)
+	for i := 0; i < len(data); i++ {
+		images.Insert(data[i])
+	}
 }
 
 func openServer() {
@@ -32,7 +67,7 @@ func openServer() {
 
 	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
-		log.Fatal("err")
+		log.Fatal(err)
 	}
 }
 
@@ -83,5 +118,8 @@ func uploadImage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	images.Insert(models.Image{Name: fileName, Label: label})
+	newImage := models.Image{Name: fileName, Label: label}
+
+	client.From("images").Insert(newImage, true, "", "minimal", "exact").Execute()
+	images.Insert(newImage)
 }
