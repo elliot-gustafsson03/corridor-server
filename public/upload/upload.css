@@ -36,7 +36,18 @@ input:focus {
     outline: none;
 }
 
-button {
-    font-size: 16px;
-    padding: 10px;
+#upload_btn {
+    display: inline-block;
+    cursor: pointer;
+    background-color: white;
+    padding: 16px;
+    border-radius: 4px;
+    user-select: none;
+    opacity: 0.7;
+    transition: 0.1s;
+}
+
+#upload_btn:active {
+    opacity: 1;
+    scale: 1.1;
 }

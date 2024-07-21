@@ -122,4 +122,6 @@ func uploadImage(w http.ResponseWriter, r *http.Request) {
 
 	client.From("images").Insert(newImage, true, "", "minimal", "exact").Execute()
 	images.Insert(newImage)
+
+	io.WriteString(w, "1")
 }

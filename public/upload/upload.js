@@ -14,4 +14,12 @@ async function sendForm() {
         method: "POST",
         body: form,
     });
+
+    const text = await res.text();
+
+    if (text === "1") {
+        alert("Din bild har laddats upp :D");
+    } else {
+        alert("Någonting gick fel D:");
+    }
 }
