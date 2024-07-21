@@ -7,7 +7,6 @@ type Node struct {
 
 type List struct {
 	Head        *Node
-	Last        *Node
 	currentNode *Node
 }
 
@@ -20,13 +19,11 @@ func (l *List) Insert(value Image) {
 
 	if l.IsEmpty() {
 		l.Head = newNode
-		l.Last = newNode
 		newNode.Next = newNode
 		l.currentNode = newNode
 	} else {
-		l.Last.Next = newNode
-		l.Last = newNode
-		newNode.Next = l.Head
+		newNode.Next = l.currentNode.Next
+		l.currentNode.Next = newNode
 	}
 }
 
