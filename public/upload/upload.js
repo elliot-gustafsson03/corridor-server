@@ -6,6 +6,11 @@ async function sendForm() {
     const image = document.querySelector("#image_input").files[0];
     const label = document.querySelector("#label_input").value;
 
+    if (!image || label == "") {
+        alert("Vänligen fyll i alla fält");
+        return;
+    }
+
     form = new FormData();
     form.append("image", image);
     form.append("label", label);
