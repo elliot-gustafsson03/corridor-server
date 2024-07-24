@@ -15,12 +15,16 @@ async function sendForm() {
     form.append("image", image);
     form.append("label", label);
 
+    document.querySelector("#loading").style = "";
+
     const res = await fetch("/api/upload_image", {
         method: "POST",
         body: form,
     });
 
     const text = await res.text();
+
+    document.querySelector("#loading").style = "display: none";
 
     if (text === "1") {
         alert("Din bild har laddats upp :D");
