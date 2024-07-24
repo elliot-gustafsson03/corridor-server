@@ -28,6 +28,9 @@ async function sendForm() {
 
     if (text === "1") {
         alert("Din bild har laddats upp :D");
+
+        document.querySelector("#image_input").value = null;
+        document.querySelector("#label_input").value = "";
     } else {
         alert("Någonting gick fel D:");
     }
