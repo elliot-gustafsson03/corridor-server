@@ -59,7 +59,9 @@ func openServer() {
 
 	http.Handle("/", fs)
 	http.HandleFunc("/api/get_next_image", getNextImage)
+	http.HandleFunc("/api/get_all_images", getAllImages)
 	http.HandleFunc("/api/upload_image", uploadImage)
+	http.HandleFunc("/api/delete_image", deleteImage)
 
 	port := "3333"
 
@@ -85,6 +87,30 @@ func getNextImage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	io.WriteString(w, string(json))
+}
+
+func getAllImages(w http.ResponseWriter, r *http.Request) {
+	res, _, err := client.From("images").Select("id, image, label", "exact", false).Execute()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	io.WriteString(w, string(res))
+}
+
+func deleteImage(w http.ResponseWriter, r *http.Request) {
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	obj := struct {
+		Id int `json:"id"`
+	}{}
+	err = json.Unmarshal(body, &obj)
+	id := obj.Id
+
+	log.Print(id)
 }
 
 func uploadImage(w http.ResponseWriter, r *http.Request) {
