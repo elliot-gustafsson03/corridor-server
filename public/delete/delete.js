@@ -14,7 +14,7 @@ window.onload = async () => {
                     <p>${json[i].label}</p>
                 </div>
             </div>
-            <span onclick = "deleteImage(${json[i].id})">[X]</span>
+            <span onclick = "deleteImage('${json[i].image}')">[X]</span>
         </div>`;
     }
 
@@ -23,8 +23,8 @@ window.onload = async () => {
 
 async function deleteImage(id) {
     await fetch("/api/delete_image", {
-        method: "POST",
-        body: JSON.stringify({ id: id }),
+        method: "DELETE",
+        body: id,
     });
 
     location.reload();

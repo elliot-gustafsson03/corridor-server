@@ -11,47 +11,13 @@ import (
 	"time"
 
 	"github.com/elliot-gustafsson03/corridor-server/models"
-	"github.com/joho/godotenv"
-	"github.com/supabase-community/supabase-go"
 )
 
 var images = models.List{}
-var client *supabase.Client
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	DB_URL := os.Getenv("DB_URL")
-	DB_KEY := os.Getenv("DB_KEY")
-
-	client = createClient(DB_URL, DB_KEY)
-	loadImages()
+	models.LoadImages(&images)
 	openServer()
-}
-
-func createClient(url string, key string) *supabase.Client {
-	client, err := supabase.NewClient(url, key, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return client
-}
-
-func loadImages() {
-	res, _, err := client.From("images").Select("*", "exact", false).Execute()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	var data []models.Image
-	json.Unmarshal(res, &data)
-	for i := 0; i < len(data); i++ {
-		images.Insert(data[i])
-	}
 }
 
 func openServer() {
@@ -90,12 +56,7 @@ func getNextImage(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllImages(w http.ResponseWriter, r *http.Request) {
-	res, _, err := client.From("images").Select("id, image, label", "exact", false).Execute()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	io.WriteString(w, string(res))
+	io.WriteString(w, models.GenerateJson(&images))
 }
 
 func deleteImage(w http.ResponseWriter, r *http.Request) {
@@ -104,13 +65,15 @@ func deleteImage(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	obj := struct {
-		Id int `json:"id"`
-	}{}
-	err = json.Unmarshal(body, &obj)
-	id := obj.Id
+	fileName := string(body)
 
-	log.Print(id)
+	err = os.Remove("./public/images/" + fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	images.Delete(fileName)
+	models.SaveImages(&images)
 }
 
 func uploadImage(w http.ResponseWriter, r *http.Request) {
@@ -145,9 +108,8 @@ func uploadImage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	newImage := models.Image{Name: fileName, Label: label}
-
-	client.From("images").Insert(newImage, true, "", "minimal", "exact").Execute()
 	images.Insert(newImage)
+	models.SaveImages(&images)
 
 	io.WriteString(w, "1")
 }
