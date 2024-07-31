@@ -42,25 +42,24 @@ func (l *List) NextValue() *Image {
 func (l *List) Delete(id string) {
 	if l.length == 1 {
 		*l = List{}
-		return
-	}
+	} else {
+		currentNode := l.Head
 
-	currentNode := l.Head
+		for i := 0; i < l.length; i++ {
+			if currentNode.Next.Value.Name == id {
+				if l.currentNode == currentNode.Next {
+					l.currentNode = l.currentNode.Next
+				}
+				if currentNode.Next == l.Head {
+					l.Head = l.Head.Next
+				}
 
-	for i := 0; i < l.length; i++ {
-		if currentNode.Next.Value.Name == id {
-			if l.currentNode == currentNode.Next {
-				l.currentNode = l.currentNode.Next
+				currentNode.Next = currentNode.Next.Next
+				break
 			}
-			if currentNode.Next == l.Head {
-				l.Head = l.Head.Next
-			}
 
-			currentNode.Next = currentNode.Next.Next
-			break
+			currentNode = currentNode.Next
 		}
-
-		currentNode = currentNode.Next
 	}
 
 	l.length--
