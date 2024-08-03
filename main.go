@@ -29,7 +29,7 @@ func openServer() {
 	http.HandleFunc("/api/upload_image", uploadImage)
 	http.HandleFunc("/api/delete_image", deleteImage)
 
-	port := "3333"
+	port := "80"
 
 	log.Print("Listening on port " + port + "...")
 
