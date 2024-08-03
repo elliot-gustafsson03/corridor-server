@@ -1,3 +1,18 @@
+#slideshow_background {
+    position: fixed;
+    inset: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#slideshow_background::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(4px) contrast(0.5) brightness(0.5);
+}
+
 .container {
     position: absolute;
     inset: 50px;

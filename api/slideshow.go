@@ -52,7 +52,7 @@ func deleteImage(w http.ResponseWriter, r *http.Request) {
 
 	fileName := string(body)
 
-	err = os.Remove("./public/images/" + fileName)
+	err = os.Remove("images/" + fileName)
 	if err != nil {
 		log.Fatal(err)
 	}
