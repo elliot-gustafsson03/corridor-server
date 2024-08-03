@@ -79,7 +79,7 @@ func uploadImage(w http.ResponseWriter, r *http.Request) {
 	label := r.Form.Get("label")
 	fileName := strconv.FormatInt(time.Now().Unix(), 10) + filepath.Ext(header.Filename)
 
-	dst, err := os.Create("./public/images/" + fileName)
+	dst, err := os.Create("images/" + fileName)
 	if err != nil {
 		log.Fatal(err)
 		return
