@@ -39,19 +39,23 @@ func GenerateJson(list *List) string {
 
 	builder.WriteString("[\n")
 
-	currentNode := list.Head
+	if !list.IsEmpty() {
+		currentNode := list.Head
 
-	for i := 0; i < list.length; i++ {
-		json, err := json.Marshal(currentNode.Value)
-		if err != nil {
-			log.Fatal(err)
-		}
+		for {
+			json, err := json.Marshal(currentNode.Value)
+			if err != nil {
+				log.Fatal(err)
+			}
 
-		builder.Write(json)
-		currentNode = currentNode.Next
+			builder.Write(json)
 
-		if i != list.length-1 {
-			builder.WriteString(",\n")
+			if currentNode.Next == list.Head {
+				break
+			} else {
+				builder.WriteString(",\n")
+				currentNode = currentNode.Next
+			}
 		}
 	}
 

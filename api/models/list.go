@@ -8,11 +8,10 @@ type Node struct {
 type List struct {
 	Head        *Node
 	currentNode *Node
-	length      int
 }
 
 func (l List) IsEmpty() bool {
-	return l.length == 0
+	return l.Head == nil
 }
 
 func (l *List) Insert(value Image) {
@@ -26,8 +25,6 @@ func (l *List) Insert(value Image) {
 		newNode.Next = l.currentNode.Next
 		l.currentNode.Next = newNode
 	}
-
-	l.length++
 }
 
 func (l *List) NextValue() *Image {
@@ -40,12 +37,12 @@ func (l *List) NextValue() *Image {
 }
 
 func (l *List) Delete(id string) {
-	if l.length == 1 {
+	if l.Head.Next == l.Head {
 		*l = List{}
 	} else {
 		currentNode := l.Head
 
-		for i := 0; i < l.length; i++ {
+		for {
 			if currentNode.Next.Value.Name == id {
 				if l.currentNode == currentNode.Next {
 					l.currentNode = l.currentNode.Next
@@ -61,6 +58,4 @@ func (l *List) Delete(id string) {
 			currentNode = currentNode.Next
 		}
 	}
-
-	l.length--
 }
