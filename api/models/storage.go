@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-const FILE_PATH = "./images.json"
+const FILE_PATH = "../../images/images.json"
 
 func LoadImages(list *List) {
 	f, err := os.Open(FILE_PATH)
