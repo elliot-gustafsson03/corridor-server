@@ -1,0 +1,48 @@
+.welcome,
+footer {
+    text-align: center;
+    padding: 20px;
+}
+
+ul {
+    list-style-type: none;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    gap: 20px;
+}
+
+li {
+    padding: 0;
+    border: 2px rgb(120, 120, 120) solid;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+li span {
+    display: block;
+    text-align: center;
+    padding: 16px;
+    background-color: rgb(180, 180, 180);
+    color: black;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    user-select: none;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+li span:active {
+    opacity: 0.7;
+}
+
+footer {
+    color: rgb(150, 150, 150);
+    font-size: 12px;
+}
+
+footer p {
+    line-height: 1.5em;
+}

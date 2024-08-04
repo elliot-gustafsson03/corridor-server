@@ -1,8 +1,13 @@
 html {
     background-color: rgb(80, 80, 80);
     font-family: "Courier New", Courier, monospace;
+    color: white;
 }
 
 body {
     margin: 0;
+}
+
+a {
+    color: rgb(50, 142, 222);
 }

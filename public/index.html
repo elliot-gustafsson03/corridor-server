@@ -10,10 +10,47 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body>
-        <h1>Apps</h1>
+        <div class="welcome">
+            <h1>Welcome to the corridor server!</h1>
+            <p>
+                Below is a list of all supported apps. Click on the big button
+                to change app.
+            </p>
+        </div>
         <ul>
-            <li onclick="changeApp('slideshow')">Slideshow</li>
-            <li onclick="changeApp('time')">Time</li>
+            <li>
+                <span onclick="changeApp('slideshow')">Slideshow</span>
+                <p>
+                    <strong
+                        >A slideshow that displays images uploaded by the
+                        users.</strong
+                    >
+                </p>
+                <p>
+                    To upload a new image, go to <a href="/upload">upload</a>.
+                </p>
+                <p>
+                    If you wish to delete an image, go to
+                    <a href="/delete">delete</a>.
+                </p>
+            </li>
+            <li>
+                <span onclick="changeApp('time')">Time</span>
+                <p><strong>A simple clock and calendar.</strong></p>
+            </li>
         </ul>
+        <footer>
+            <p>
+                The source code for this project is available on
+                <a href="https://github.com/elliot-gustafsson03/corridor-server"
+                    >GitHub</a
+                >. If you encounter a bug, or would like to see a new feature
+                added, submit a new issue explaining what needs to be changed.
+            </p>
+            <p>
+                Also, don't forget to give the repo a star ;) Enjoy using this
+                application!
+            </p>
+        </footer>
     </body>
 </html>
