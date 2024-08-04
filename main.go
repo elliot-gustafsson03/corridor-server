@@ -19,7 +19,7 @@ func openServer() {
 	http.Handle("/images/", http.StripPrefix("/images", http.FileServer(http.Dir("images"))))
 	http.Handle("/", http.FileServer(http.Dir("public")))
 
-	port := "7100"
+	port := "80"
 	log.Print("Listening on port " + port + "...")
 	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
