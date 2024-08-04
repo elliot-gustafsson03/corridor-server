@@ -13,6 +13,7 @@ func main() {
 
 func openServer() {
 	api.AddSlideshowEndpoints()
+	api.AddChangeAppEndpoints()
 
 	http.Handle("/apps/", http.StripPrefix("/apps", http.FileServer(http.Dir("apps"))))
 	http.Handle("/images/", http.StripPrefix("/images", http.FileServer(http.Dir("images"))))
