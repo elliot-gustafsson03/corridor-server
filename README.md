@@ -22,12 +22,12 @@ which will host the server on the local network on port 7100.
 
 ### Viewing the slideshow
 
-On the same device, open up a web browser and navigate to [http://localhost:3333](http://localhost:7100). This is where images will appear.
+On the same device, open up a web browser and navigate to [http://localhost:7100](http://localhost:7100). This is where images will appear.
 
 ### Uploading an image
 
-On any device in the network, open a browser and navigate to [http://{ip-to-server}:3333/upload/](http://{ip-to-server}:7100/upload/). On this page you will be able to select an image and give it a description. After clicking upload, this information will be posted to the server and soon appear on the screen.
+On any device in the network, open a browser and navigate to [http://{ip-to-server}:7100/upload/](http://{ip-to-server}:7100/upload/). On this page you will be able to select an image and give it a description. After clicking upload, this information will be posted to the server and soon appear on the screen.
 
 ### Deleting an image
 
-To delete an image, instead navigate to [http://{ip-to-server}:3333/delete/](http://{ip-to-server}:7100/delete/) and choose from the list which image to delete.
+To delete an image, instead navigate to [http://{ip-to-server}:7100/delete/](http://{ip-to-server}:7100/delete/) and choose from the list which image to delete.
