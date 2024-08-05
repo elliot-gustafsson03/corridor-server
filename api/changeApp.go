@@ -16,7 +16,7 @@ var upgrader = websocket.Upgrader{
 	},
 }
 
-var conn *websocket.Conn
+var conn *websocket.Conn = nil
 
 func AddChangeAppEndpoints() {
 	http.HandleFunc("/ws/connect", createConnection)
@@ -24,6 +24,10 @@ func AddChangeAppEndpoints() {
 }
 
 func createConnection(w http.ResponseWriter, r *http.Request) {
+	if conn != nil {
+		conn.Close()
+	}
+
 	c, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Fatal(err)
@@ -33,10 +37,15 @@ func createConnection(w http.ResponseWriter, r *http.Request) {
 }
 
 func changeApp(w http.ResponseWriter, r *http.Request) {
-	body, err := io.ReadAll(r.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
+	if conn != nil {
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	conn.WriteMessage(websocket.TextMessage, body)
+		conn.WriteMessage(websocket.TextMessage, body)
+		io.WriteString(w, "1")
+	} else {
+		io.WriteString(w, "0")
+	}
 }
