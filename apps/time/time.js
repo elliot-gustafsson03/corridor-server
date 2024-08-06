@@ -23,7 +23,15 @@ const months = [
     "December",
 ];
 
+let canvas;
+let ctx;
+
+const CLOCK_R = 200;
+
 window.onload = () => {
+    canvas = document.querySelector("#canvas");
+    ctx = canvas.getContext("2d");
+
     clockTick();
     changeDate();
 
@@ -40,9 +48,15 @@ function clockTick() {
 
     document.querySelector("#time").innerHTML = time;
 
-    if (time == "00:00:00") {
+    if (time === "00:00:00") {
         changeDate(dateTime);
     }
+
+    updateClock(
+        dateTime.getHours(),
+        dateTime.getMinutes(),
+        dateTime.getSeconds(),
+    );
 }
 
 function changeDate() {
@@ -65,4 +79,42 @@ function changeDate() {
     const date = `${weekDay}, the ${day}${dayEnding} of ${month}, ${year}`;
 
     document.querySelector("#date").innerHTML = date;
+}
+
+function updateClock(h, m, s) {
+    ctx.clearRect(0, 0, 2 * CLOCK_R, 2 * CLOCK_R);
+    drawClock();
+    drawPointers(h, m, s);
+}
+
+function drawClock() {
+    ctx.beginPath();
+    ctx.arc(CLOCK_R, CLOCK_R, CLOCK_R - 10, 0, 2 * Math.PI, false);
+    ctx.fillStyle = "white";
+    ctx.fill();
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 8;
+    ctx.stroke();
+}
+
+function drawPointers(h, m, s) {
+    ctx.lineWidth = 8;
+    drawPointer(h / 12, CLOCK_R * 0.4);
+    ctx.lineWidth = 4;
+    drawPointer(m / 60, CLOCK_R * 0.7);
+    ctx.lineWidth = 2;
+    drawPointer(s / 60, CLOCK_R * 0.8);
+}
+
+function drawPointer(ratio, length) {
+    const angle = 2 * Math.PI * ratio - Math.PI / 2;
+
+    ctx.beginPath();
+    ctx.moveTo(CLOCK_R, CLOCK_R);
+    ctx.lineTo(
+        CLOCK_R + Math.cos(angle) * length,
+        CLOCK_R + Math.sin(angle) * length,
+    );
+    ctx.stroke();
+    ctx.closePath();
 }

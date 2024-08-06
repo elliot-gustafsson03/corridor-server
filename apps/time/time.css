@@ -14,3 +14,10 @@
 .container p {
     font-size: 30px;
 }
+
+canvas {
+    display: block;
+    width: 90%;
+    max-width: 250px;
+    margin: auto;
+}
