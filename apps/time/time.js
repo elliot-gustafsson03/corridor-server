@@ -32,11 +32,24 @@ window.onload = () => {
     canvas = document.querySelector("#canvas");
     ctx = canvas.getContext("2d");
 
+    getNameDay();
     clockTick();
     changeDate();
 
     setInterval(clockTick, 1000);
 };
+
+async function getNameDay() {
+    const res = await fetch("/api/get_name_day");
+    const json = await res.json();
+
+    document.querySelector("#name_day").style.display =
+        json.length === 0 ? "none" : "block";
+    if (json.length > 0) {
+        const nameDay = `Concratulations to ${json.join(" and ")} on their name day!`;
+        document.querySelector("#name_day").innerHTML = nameDay;
+    }
+}
 
 function clockTick() {
     const dateTime = new Date();
@@ -50,6 +63,7 @@ function clockTick() {
 
     if (time === "00:00:00") {
         changeDate(dateTime);
+        getNameDay();
     }
 
     updateClock(
