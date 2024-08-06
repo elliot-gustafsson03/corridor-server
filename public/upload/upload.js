@@ -7,7 +7,7 @@ async function sendForm() {
     const label = document.querySelector("#label_input").value;
 
     if (!image || label == "") {
-        alert("Vänligen fyll i alla fält");
+        alert("Please enter an image and a description");
         return;
     }
 
@@ -27,11 +27,11 @@ async function sendForm() {
     document.querySelector("#loading").style = "display: none";
 
     if (text === "1") {
-        alert("Din bild har laddats upp :D");
+        alert("Your image has been uploaded :D");
 
         document.querySelector("#image_input").value = null;
         document.querySelector("#label_input").value = "";
     } else {
-        alert("Någonting gick fel D:");
+        alert("Something went wrong D:");
     }
 }
