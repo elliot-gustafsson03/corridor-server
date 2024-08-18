@@ -46,7 +46,7 @@ async function getNameDay() {
     document.querySelector("#name_day").style.display =
         json.length === 0 ? "none" : "block";
     if (json.length > 0) {
-        const nameDay = `Concratulations to ${json.join(" and ")} on their name day!`;
+        const nameDay = `Congratulations to ${json.join(" and ")} on their name day!`;
         document.querySelector("#name_day").innerHTML = nameDay;
     }
 }
